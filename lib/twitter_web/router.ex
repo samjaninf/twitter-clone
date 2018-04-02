@@ -23,9 +23,9 @@ defmodule TwitterWeb.Router do
   scope "/auth", TwitterWeb do
     pipe_through :browser
 
-    get "/signout", AuthController, :sign_out
+    get "/signout", AuthController, :delete
     get "/:provider", AuthController, :request
-    get "/:provider/callback", AuthController, :new
+    get "/:provider/callback", AuthController, :callback
 
   end
 
