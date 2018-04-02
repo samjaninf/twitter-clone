@@ -1,6 +1,6 @@
 defmodule Twitter.NavigationTest do
   use TwitterWeb.ConnCase, async: true
-  import Twitter.Factory
+  import Twitter.UserFactory
 
   test "shows a sign in with Google link when not signed in", %{conn: conn} do
     conn = get conn, "/"

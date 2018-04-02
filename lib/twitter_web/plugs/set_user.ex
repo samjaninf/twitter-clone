@@ -1,6 +1,5 @@
 defmodule Twitter.Plugs.SetUser do
   import Plug.Conn
-  import Phoenix.Controller
 
   alias Twitter.{Repo, User}
 
