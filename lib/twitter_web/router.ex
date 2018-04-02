@@ -7,11 +7,12 @@ defmodule TwitterWeb.Router do
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug Twitter.Plugs.SetUser
+
   end
 
   pipeline :api do
     plug :accepts, ["json"]
-    plug Twitter.Plugs.SetUser
   end
 
   scope "/", TwitterWeb do
