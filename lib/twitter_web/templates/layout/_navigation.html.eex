@@ -1,0 +1,9 @@
+<nav class="green">
+  <div class="nav-wrapper container">
+    <a href="/" class="brand-logo">Twitter
+    </a>
+    <ul class="right">
+      <li><a href="#">Sign in with Google</a></li>
+    </ul>
+  </div>
+</nav>
