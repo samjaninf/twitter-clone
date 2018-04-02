@@ -11,6 +11,7 @@ defmodule TwitterWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug Twitter.Plugs.SetUser
   end
 
   scope "/", TwitterWeb do
@@ -22,6 +23,7 @@ defmodule TwitterWeb.Router do
   scope "/auth", TwitterWeb do
     pipe_through :browser
 
+    get "/signout", AuthController, :sign_out
     get "/:provider", AuthController, :request
     get "/:provider/callback", AuthController, :new
 
