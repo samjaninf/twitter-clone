@@ -15,6 +15,6 @@ defmodule Twitter.NavigationTest do
     |> assign(:user, user)
     |> get("/")
 
-    assert html_response(conn, 200) =~ "Sign out"
+    assert html_response(conn, 200) =~ "Sign Out"
 end
 end
