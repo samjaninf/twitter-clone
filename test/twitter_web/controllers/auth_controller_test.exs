@@ -1,6 +1,7 @@
 defmodule TwitterWeb.AuthControllerTest do
   use TwitterWeb.ConnCase
   alias Twitter.{Repo, User}
+  import Twitter.UserFactory
 
   @ueberauth_auth %{credentials: %{token: "fdsnoafhnoofh08h38h"},
                    info: %{email: "batman@example.com", first_name: "Bruce", last_name: "Wayne"},
@@ -19,5 +20,16 @@ defmodule TwitterWeb.AuthControllerTest do
     users = User |> Repo.all
     assert Enum.count(users) == 1
     assert get_flash(conn, :info) == "Thank you for signing in!"
+  end
+
+  test "signs out user", %{conn: conn} do
+    user = insert(:user)
+
+    conn = conn
+    |> assign(:user, user)
+    |> get("/auth/signout")
+    |> get("/")
+
+    assert conn.assigns.user == nil
   end
 end
