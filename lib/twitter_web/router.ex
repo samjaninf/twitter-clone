@@ -19,7 +19,7 @@ defmodule TwitterWeb.Router do
     get "/", PageController, :index
   end
 
-  scope "auth/", TwitterWeb do
+  scope "/auth", TwitterWeb do
     pipe_through :browser
 
     get "/:provider", AuthController, :request

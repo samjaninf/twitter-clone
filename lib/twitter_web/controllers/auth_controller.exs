@@ -1,3 +1,5 @@
-defmodule TwitterWeb.PageController do
+defmodule TwitterWeb.AuthController do
   use TwitterWeb, :controller
+  plug Ueberauth
+
 end
