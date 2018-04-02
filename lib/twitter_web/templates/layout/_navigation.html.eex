@@ -3,7 +3,11 @@
     <a href="/" class="brand-logo">Twitter
     </a>
     <ul class="right">
-      <li><a href="#">Sign in with Google</a></li>
+      <%= if @conn.assigns.user do %>
+        <li><%= link "Sign Out", to: auth_path(@conn, :sign_out) %></li>
+      <% else %>
+        <li><%= link "Sign in with Google", to: auth_path(@conn, :request, "Google") %></li>
+      <% end %>
     </ul>
   </div>
 </nav>
