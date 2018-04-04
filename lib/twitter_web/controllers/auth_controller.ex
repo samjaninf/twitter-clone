@@ -17,6 +17,7 @@ defmodule TwitterWeb.AuthController do
         conn
         |> put_flash(:info, "Thank you for signing in!")
         |> put_session(:user_id, user.id)
+        |> configure_session(renew: true)
         |> redirect(to: page_path(conn, :index))
       {:error, _reason} ->
         conn
