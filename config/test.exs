@@ -9,5 +9,5 @@ config :twitter, TwitterWeb.Endpoint,
 # Print only warnings and errors during test
 config :logger, level: :warn
 
-# Configure your database
+# Configure your databases
 import_config "test.secret.exs"
