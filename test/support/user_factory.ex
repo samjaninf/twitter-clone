@@ -1,6 +1,6 @@
 defmodule Twitter.UserFactory do
   use ExMachina.Ecto, repo: Twitter.Repo
-  alias Twitter.User
+  alias Twitter.Tweeters.User
 
   def user_factory do
     %User{

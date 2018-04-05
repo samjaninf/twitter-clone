@@ -1,6 +1,7 @@
 defmodule TwitterWeb.AuthControllerTest do
   use TwitterWeb.ConnCase
-  alias Twitter.{Repo, User}
+  alias Twitter.Tweeters.User
+  alias Twitter.Repo
   import Twitter.UserFactory
 
   @ueberauth_auth %{credentials: %{token: "fdsnoafhnoofh08h38h"},

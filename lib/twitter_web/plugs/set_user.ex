@@ -1,7 +1,8 @@
 defmodule Twitter.Plugs.SetUser do
   import Plug.Conn
 
-  alias Twitter.{Repo, User}
+  alias Twitter.Repo
+  alias Twitter.Tweeters.User
 
   def init(_params) do
   end

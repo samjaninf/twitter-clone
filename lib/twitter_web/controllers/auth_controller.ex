@@ -2,7 +2,8 @@ defmodule TwitterWeb.AuthController do
   use TwitterWeb, :controller
   plug Ueberauth
 
-  alias Twitter.{User, Repo}
+  alias Twitter.Tweeters.User
+  alias Twitter.Repo
 
   def callback(%{assigns: %{ueberauth_auth: auth}} = conn, _params) do
     user_params = %{token: auth.credentials.token, first_name: auth.info.first_name, last_name: auth.info.last_name, email: auth.info.email, provider: "google"}
