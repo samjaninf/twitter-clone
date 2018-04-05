@@ -48,11 +48,4 @@ config :logger, :console, format: "[$level] $message\n"
 # in production as building large stacktraces may be expensive.
 config :phoenix, :stacktrace_depth, 20
 
-# Configure your database
-config :twitter, Twitter.Repo,
-  adapter: Ecto.Adapters.Postgres,
-  database: "twitter_dev",
-  username: System.get_env("POSTGRES_USER"),
-  password: System.get_env("POSTGRES_PASSWORD"),
-  hostname: System.get_env("DB_HOST"),
-  pool_size: 10
+import_config "dev.secret.exs"
