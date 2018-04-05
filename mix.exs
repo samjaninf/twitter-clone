@@ -20,7 +20,7 @@ defmodule Twitter.Mixfile do
   def application do
     [
       mod: {Twitter.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools, :faker]
     ]
   end
 
@@ -43,7 +43,8 @@ defmodule Twitter.Mixfile do
       {:cowboy, "~> 1.0"},
       {:ueberauth, "~> 0.4"},
       {:ueberauth_google, "~> 0.5"},
-      {:ex_machina, "~> 2.0", only: :test}
+      {:ex_machina, "~> 2.0", only: :test},
+      {:faker, "~> 0.10", only: :test}
     ]
   end
 
