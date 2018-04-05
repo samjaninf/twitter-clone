@@ -2,7 +2,7 @@ defmodule TwitterWeb.AuthControllerTest do
   use TwitterWeb.ConnCase
   alias Twitter.Tweeters.User
   alias Twitter.Repo
-  import Twitter.UserFactory
+  import Twitter.Factory
 
 
   test "redirects user to Google for authentication", %{conn: conn} do

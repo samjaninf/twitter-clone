@@ -1,4 +1,4 @@
-defmodule Twitter.UserFactory do
+defmodule Twitter.Factory do
   use ExMachina.Ecto, repo: Twitter.Repo
   import Faker
   alias Twitter.Tweeters.User
