@@ -20,7 +20,7 @@ defmodule Twitter.Mixfile do
   def application do
     [
       mod: {Twitter.Application, []},
-      extra_applications: [:logger, :runtime_tools, :faker]
+      extra_applications: [:logger, :runtime_tools]
     ]
   end
 
