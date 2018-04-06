@@ -1,6 +1,8 @@
 defmodule Twitter.Tweeters.User do
   use Ecto.Schema
   import Ecto.Changeset
+  alias Twitter.Tweeters.Tweet
+
 
 
   schema "users" do
@@ -9,6 +11,7 @@ defmodule Twitter.Tweeters.User do
     field :last_name, :string
     field :provider, :string
     field :token, :string
+    has_many :tweets, Tweet
 
     timestamps()
   end
