@@ -20,6 +20,7 @@ defmodule TwitterWeb.Router do
 
     get "/", PageController, :index
     resources "/users", UserController
+    resources "/tweets", TweetController
   end
 
   scope "/auth", TwitterWeb do
