@@ -6,7 +6,7 @@ defmodule Twitter.Tweeters do
   import Ecto.Query, warn: false
   alias Twitter.Repo
 
-  alias Twitter.Tweeters.User
+  alias Twitter.Tweeters.{User, Tweet}
 
   @doc """
   Returns the list of users.
@@ -18,7 +18,9 @@ defmodule Twitter.Tweeters do
 
   """
   def list_users do
-    Repo.all(User)
+    User
+    |> Repo.all()
+    |> Repo.preload(:tweets)
   end
 
   @doc """
@@ -35,7 +37,11 @@ defmodule Twitter.Tweeters do
       ** (Ecto.NoResultsError)
 
   """
-  def get_user!(id), do: Repo.get!(User, id)
+  def get_user!(id) do
+    User
+     |> Repo.get!(id)
+     |> Repo.preload(:tweets)
+  end
 
   @doc """
   Creates a user.
@@ -102,8 +108,6 @@ defmodule Twitter.Tweeters do
     User.changeset(user, %{})
   end
 
-  alias Twitter.Tweeters.Tweet
-
   @doc """
   Returns the list of tweets.
 
@@ -141,14 +145,16 @@ defmodule Twitter.Tweeters do
       iex> create_tweet(%{field: value})
       {:ok, %Tweet{}}
 
-      iex> create_tweet(%{field: bad_value})
+      i  ex> create_tweet(%{field: bad_value})
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_tweet(attrs \\ %{}) do
-    %Tweet{}
+  def create_tweet(user, attrs \\ %{}) do
+    user
+    |> Ecto.build_assoc(:tweets)
     |> Tweet.changeset(attrs)
     |> Repo.insert()
+
   end
 
   @doc """
