@@ -4,6 +4,9 @@ defmodule TwitterWeb.TweetController do
   alias Twitter.Tweeters
   alias Twitter.Tweeters.Tweet
 
+  plug Twitter.Plugs.RequireAuth when action in [:new, :create, :edit, :update, :delete]
+  plug :check_tweet_owner when action in [:edit, :update, :delete]
+
   def index(conn, _params) do
     tweets = Tweeters.list_tweets()
     render(conn, "index.html", tweets: tweets)
