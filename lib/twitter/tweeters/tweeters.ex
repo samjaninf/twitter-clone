@@ -154,7 +154,6 @@ defmodule Twitter.Tweeters do
     |> Ecto.build_assoc(:tweets)
     |> Tweet.changeset(attrs)
     |> Repo.insert()
-
   end
 
   @doc """
