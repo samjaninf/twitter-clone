@@ -11,11 +11,14 @@ defmodule TwitterWeb.TweetController do
 
   def new(conn, _params) do
     changeset = Tweeters.change_tweet(%Tweet{})
+
     render(conn, "new.html", changeset: changeset)
   end
 
   def create(conn, %{"tweet" => tweet_params}) do
-    case Tweeters.create_tweet(tweet_params) do
+      user = conn.assigns.user
+
+    case Tweeters.create_tweet(user, tweet_params) do
       {:ok, tweet} ->
         conn
         |> put_flash(:info, "Tweet created successfully.")
