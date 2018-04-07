@@ -60,4 +60,15 @@ defmodule TwitterWeb.TweetController do
     |> put_flash(:info, "Tweet deleted successfully.")
     |> redirect(to: tweet_path(conn, :index))
   end
+
+  defp check_tweet_owner(%{params: %{"id" => tweet_id}} = conn, _params) do
+    if Tweeters.get_tweet!(tweet_id).user_id == conn.assigns.user.id do
+      conn
+    else
+      conn
+      |> put_flash(:error, "No Access.")
+      |> redirect(to: tweet_path(conn, :index))
+      |> halt()
+    end
+  end
 end
