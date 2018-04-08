@@ -15,8 +15,8 @@ defmodule Twitter.Factory do
 
   def tweet_factory do
     %Tweet{
-      body: Faker.Lorem.ipsum,
-      user_id: 1
+      body: Faker.Lorem.sentence(%Range{first: 1, last: 10}),
+      user: build(:user)
     }
   end
 
