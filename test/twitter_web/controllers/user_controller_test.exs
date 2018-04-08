@@ -2,14 +2,11 @@ defmodule TwitterWeb.UserControllerTest do
   use TwitterWeb.ConnCase
 
   alias Twitter.Tweeters
+  import Twitter.Factory
 
-  @create_attrs %{email: "some email", first_name: "some first_name", last_name: "some last_name", provider: "some provider", token: "some token"}
-  @update_attrs %{email: "some updated email", first_name: "some updated first_name", last_name: "some updated last_name", provider: "some updated provider", token: "some updated token"}
-  @invalid_attrs %{email: nil, first_name: nil, last_name: nil, provider: nil, token: nil}
-
-  def fixture(:user) do
-    {:ok, user} = Tweeters.create_user(@create_attrs)
-    user
+  setup do
+    user = insert(:user)
+    {:ok, user: user}
   end
 
   describe "index" do
