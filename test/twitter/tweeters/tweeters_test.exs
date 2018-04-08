@@ -46,14 +46,14 @@ defmodule Twitter.TweetersTest do
 
     test "update_user/2 with valid data updates the user", setup do
       user = setup[:user]
-      user_update_params = params_for(:user)
-      assert {:ok, user} = Tweeters.update_user(user, user_update_params)
+      valid_user_update_params = params_for(:user)
+      assert {:ok, user} = Tweeters.update_user(user, valid_user_update_params)
       assert %User{} = user
-      assert user.email == user_update_params.email
-      assert user.first_name == user_update_params.first_name
-      assert user.last_name == user_update_params.last_name
-      assert user.provider == user_update_params.provider
-      assert user.token == user_update_params.token
+      assert user.email == valid_user_update_params.email
+      assert user.first_name == valid_user_update_params.first_name
+      assert user.last_name == valid_user_update_params.last_name
+      assert user.provider == valid_user_update_params.provider
+      assert user.token == valid_user_update_params.token
     end
 
     test "update_user/2 with invalid data returns error changeset" do
