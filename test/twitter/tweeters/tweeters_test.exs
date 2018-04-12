@@ -107,7 +107,7 @@ defmodule Twitter.TweetersTest do
       assert tweet.body == valid_update_params.body
     end
 
-    test "update_tweet/2 with invalid data returns error changeset", setup do
+    test "update_tweet/2 with invalid data returns error changeset" do
       tweet = insert(:tweet)
       invalid_update_params = params_for(:tweet, body: "")
       assert {:error, %Ecto.Changeset{}} = Tweeters.update_tweet(tweet, invalid_update_params)

@@ -1,19 +1,23 @@
 defmodule TwitterWeb.TweetControllerTest do
   use TwitterWeb.ConnCase
 
-  alias Twitter.Tweeters
+  import Twitter.Factory
 
-  @create_attrs %{body: "some body"}
-  @update_attrs %{body: "some updated body"}
-  @invalid_attrs %{body: nil}
+  setup do
+    user = insert(:user)
 
-  def fixture(:tweet) do
-    {:ok, tweet} = Tweeters.create_tweet(@create_attrs)
-    tweet
+    tweet = insert(:tweet, user: user)
+    valid_tweet_params = params_for(:tweet)
+    invalid_tweet_params = params_for(:tweet, body: "")
+
+    conn = assign(build_conn(), :user, user)
+
+    {:ok, %{conn: conn, user: user, tweet: tweet, valid_tweet_params: valid_tweet_params, invalid_tweet_params: invalid_tweet_params}}
   end
 
   describe "index" do
     test "lists all tweets", %{conn: conn} do
+
       conn = get conn, tweet_path(conn, :index)
       assert html_response(conn, 200) =~ "Listing Tweets"
     end
@@ -21,14 +25,16 @@ defmodule TwitterWeb.TweetControllerTest do
 
   describe "new tweet" do
     test "renders form", %{conn: conn} do
+
       conn = get conn, tweet_path(conn, :new)
       assert html_response(conn, 200) =~ "New Tweet"
     end
   end
 
   describe "create tweet" do
-    test "redirects to show when data is valid", %{conn: conn} do
-      conn = post conn, tweet_path(conn, :create), tweet: @create_attrs
+    test "redirects to show when data is valid", %{conn: conn, valid_tweet_params: valid_tweet_params} do
+
+      conn = post conn, tweet_path(conn, :create), tweet: valid_tweet_params
 
       assert %{id: id} = redirected_params(conn)
       assert redirected_to(conn) == tweet_path(conn, :show, id)
