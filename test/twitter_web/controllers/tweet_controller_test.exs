@@ -37,52 +37,46 @@ defmodule TwitterWeb.TweetControllerTest do
       assert html_response(conn, 200) =~ "Show Tweet"
     end
 
-    test "renders errors when data is invalid", %{conn: conn} do
-      conn = post conn, tweet_path(conn, :create), tweet: @invalid_attrs
+    test "renders errors when data is invalid", %{conn: conn, invalid_tweet_params: invalid_tweet_params} do
+
+      conn = post conn, tweet_path(conn, :create), tweet: invalid_tweet_params
       assert html_response(conn, 200) =~ "New Tweet"
     end
   end
 
   describe "edit tweet" do
-    setup [:create_tweet]
-
     test "renders form for editing chosen tweet", %{conn: conn, tweet: tweet} do
+
       conn = get conn, tweet_path(conn, :edit, tweet)
       assert html_response(conn, 200) =~ "Edit Tweet"
     end
   end
 
   describe "update tweet" do
-    setup [:create_tweet]
+    test "redirects when data is valid", %{conn: conn, tweet: tweet, valid_tweet_params: valid_tweet_params} do
 
-    test "redirects when data is valid", %{conn: conn, tweet: tweet} do
-      conn = put conn, tweet_path(conn, :update, tweet), tweet: @update_attrs
+      conn = put conn, tweet_path(conn, :update, tweet), tweet: valid_tweet_params
       assert redirected_to(conn) == tweet_path(conn, :show, tweet)
 
       conn = get conn, tweet_path(conn, :show, tweet)
-      assert html_response(conn, 200) =~ "some updated body"
+      assert html_response(conn, 200) =~ valid_tweet_params.body
     end
 
-    test "renders errors when data is invalid", %{conn: conn, tweet: tweet} do
-      conn = put conn, tweet_path(conn, :update, tweet), tweet: @invalid_attrs
+    test "renders errors when data is invalid", %{conn: conn, tweet: tweet, invalid_tweet_params: invalid_tweet_params} do
+
+      conn = put conn, tweet_path(conn, :update, tweet), tweet: invalid_tweet_params
       assert html_response(conn, 200) =~ "Edit Tweet"
     end
   end
 
   describe "delete tweet" do
-    setup [:create_tweet]
-
     test "deletes chosen tweet", %{conn: conn, tweet: tweet} do
+
       conn = delete conn, tweet_path(conn, :delete, tweet)
       assert redirected_to(conn) == tweet_path(conn, :index)
       assert_error_sent 404, fn ->
         get conn, tweet_path(conn, :show, tweet)
       end
     end
-  end
-
-  defp create_tweet(_) do
-    tweet = fixture(:tweet)
-    {:ok, tweet: tweet}
   end
 end
