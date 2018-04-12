@@ -5,13 +5,10 @@ defmodule TwitterWeb.TweetControllerTest do
 
   setup do
     user = insert(:user)
-
     tweet = insert(:tweet, user: user)
     valid_tweet_params = params_for(:tweet)
     invalid_tweet_params = params_for(:tweet, body: "")
-
     conn = assign(build_conn(), :user, user)
-
     {:ok, %{conn: conn, user: user, tweet: tweet, valid_tweet_params: valid_tweet_params, invalid_tweet_params: invalid_tweet_params}}
   end
 
