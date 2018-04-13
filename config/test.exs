@@ -10,4 +10,10 @@ config :twitter, TwitterWeb.Endpoint,
 config :logger, level: :warn
 
 # Configure your databases
-import_config "test.secret.exs"
+config :twitter, Twitter.Repo,
+  adapter: Ecto.Adapters.Postgres,
+  username: "postgres",
+  password: "postgres",
+  database: "twitter_test",
+  hostname: "localhost",
+  pool: Ecto.Adapters.SQL.Sandbox
