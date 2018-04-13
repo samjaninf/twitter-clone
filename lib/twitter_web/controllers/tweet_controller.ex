@@ -25,7 +25,7 @@ defmodule TwitterWeb.TweetController do
       {:ok, tweet} ->
         conn
         |> put_flash(:info, "Tweet created successfully.")
-        |> redirect(to: tweet_path(conn, :show, tweet))
+        |> redirect(to: user_tweet_path(conn, :show, conn.assings[:user], tweet))
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
@@ -49,7 +49,7 @@ defmodule TwitterWeb.TweetController do
       {:ok, tweet} ->
         conn
         |> put_flash(:info, "Tweet updated successfully.")
-        |> redirect(to: tweet_path(conn, :show, tweet))
+        |> redirect(to: user_tweet_path(conn, :show, conn.assings[:user], tweet))
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", tweet: tweet, changeset: changeset)
     end
@@ -61,7 +61,7 @@ defmodule TwitterWeb.TweetController do
 
     conn
     |> put_flash(:info, "Tweet deleted successfully.")
-    |> redirect(to: tweet_path(conn, :index))
+    |> redirect(to: user_tweet_path(conn, :index, conn.assigns[:user]))
   end
 
   defp check_tweet_owner(%{params: %{"id" => tweet_id}} = conn, _params) do
@@ -70,7 +70,7 @@ defmodule TwitterWeb.TweetController do
     else
       conn
       |> put_flash(:error, "No Access.")
-      |> redirect(to: tweet_path(conn, :index))
+      |> redirect(to: user_tweet_path(conn, :index, conn.assings[:user]))
       |> halt()
     end
   end

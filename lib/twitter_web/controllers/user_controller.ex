@@ -30,24 +30,24 @@ defmodule TwitterWeb.UserController do
     render(conn, "show.html", user: user)
   end
 
-  def edit(conn, %{"id" => id}) do
-    user = Tweeters.get_user!(id)
-    changeset = Tweeters.change_user(user)
-    render(conn, "edit.html", user: user, changeset: changeset)
-  end
+  # def edit(conn, %{"id" => id}) do
+  #   user = Tweeters.get_user!(id)
+  #   changeset = Tweeters.change_user(user)
+  #   render(conn, "edit.html", user: user, changeset: changeset)
+  # end
 
-  def update(conn, %{"id" => id, "user" => user_params}) do
-    user = Tweeters.get_user!(id)
-
-    case Tweeters.update_user(user, user_params) do
-      {:ok, user} ->
-        conn
-        |> put_flash(:info, "User updated successfully.")
-        |> redirect(to: user_path(conn, :show, user))
-      {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "edit.html", user: user, changeset: changeset)
-    end
-  end
+  # def update(conn, %{"id" => id, "user" => user_params}) do
+  #   user = Tweeters.get_user!(id)
+  #
+  #   case Tweeters.update_user(user, user_params) do
+  #     {:ok, user} ->
+  #       conn
+  #       |> put_flash(:info, "User updated successfully.")
+  #       |> redirect(to: user_path(conn, :show, user))
+  #     {:error, %Ecto.Changeset{} = changeset} ->
+  #       render(conn, "edit.html", user: user, changeset: changeset)
+  #   end
+  # end
 
   def delete(conn, %{"id" => id}) do
     user = Tweeters.get_user!(id)

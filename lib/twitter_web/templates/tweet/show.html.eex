@@ -9,5 +9,5 @@
 
 </ul>
 
-<span><%= link "Edit", to: tweet_path(@conn, :edit, @tweet) %></span>
-<span><%= link "Back", to: tweet_path(@conn, :index) %></span>
+<span><%= link "Edit", to: user_tweet_path(@conn, :edit, @user, @tweet) %></span>
+<span><%= link "Back", to: user_tweet_path(@conn, :index, @user) %></span>

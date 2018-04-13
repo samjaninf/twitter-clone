@@ -1,5 +1,5 @@
 <h2>New Tweet</h2>
 
-<%= render "form.html", Map.put(assigns, :action, tweet_path(@conn, :create)) %>
+<%= render "form.html", Map.put(assigns, :action, user_tweet_path(@conn, :create, @user)) %>
 
-<span><%= link "Back", to: tweet_path(@conn, :index) %></span>
+<span><%= link "Back", to: user_tweet_path(@conn, :index, @user) %></span>
