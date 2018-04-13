@@ -11,7 +11,7 @@ defmodule Twitter.Plugs.RequireAuth do
     else
       conn
       |> put_flash(:error, "You must be logged in.")
-      |> redirect(to: Helpers.tweet_path(conn, :index))
+      |> redirect(to: Helpers.user_tweet_path(conn, :index, conn.assigns.user))
       |> halt()
     end
   end
