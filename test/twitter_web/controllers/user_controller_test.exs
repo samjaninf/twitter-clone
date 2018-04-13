@@ -1,7 +1,6 @@
 defmodule TwitterWeb.UserControllerTest do
   use TwitterWeb.ConnCase
 
-  alias Twitter.Tweeters
   import Twitter.Factory
 
   setup do
