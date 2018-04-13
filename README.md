@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/ieatkimchi/twitter-clone.svg?branch=master)](https://travis-ci.org/ieatkimchi/twitter-clone)
+
 # Twitter
 
 To start your Phoenix server:
