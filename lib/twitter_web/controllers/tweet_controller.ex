@@ -7,70 +7,75 @@ defmodule TwitterWeb.TweetController do
   plug Twitter.Plugs.RequireAuth when action in [:new, :create, :edit, :update, :delete]
   plug :check_tweet_owner when action in [:edit, :update, :delete]
 
-  def index(conn, _params) do
-    tweets = Tweeters.list_tweets()
+
+  def index(conn, _params, user) do
+    tweets = Tweeters.list_tweets(user)
     render(conn, "index.html", tweets: tweets)
   end
 
-  def new(conn, _params) do
+  def new(conn, _params, user) do
     changeset = Tweeters.change_tweet(%Tweet{})
 
-    render(conn, "new.html", changeset: changeset)
+    render(conn, "new.html", changeset: changeset, user: user)
   end
 
-  def create(conn, %{"tweet" => tweet_params}) do
-      user = conn.assigns.user
+  def create(conn, %{"tweet" => tweet_params}, user) do
 
     case Tweeters.create_tweet(user, tweet_params) do
       {:ok, tweet} ->
         conn
         |> put_flash(:info, "Tweet created successfully.")
-        |> redirect(to: user_tweet_path(conn, :show, conn.assings[:user], tweet))
+        |> redirect(to: user_tweet_path(conn, :show, user, tweet))
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "new.html", changeset: changeset)
+        render(conn, "new.html", changeset: changeset, user: user)
     end
   end
 
-  def show(conn, %{"id" => id}) do
-    tweet = Tweeters.get_tweet!(id)
-    render(conn, "show.html", tweet: tweet)
+  def show(conn, %{"id" => id}, user) do
+    tweet = Tweeters.get_tweet!(user, id)
+    render(conn, "show.html", tweet: tweet, user: user)
   end
 
-  def edit(conn, %{"id" => id}) do
-    tweet = Tweeters.get_tweet!(id)
+  def edit(conn, %{"id" => id}, user) do
+    tweet = Tweeters.get_tweet!(user, id)
     changeset = Tweeters.change_tweet(tweet)
-    render(conn, "edit.html", tweet: tweet, changeset: changeset)
+    render(conn, "edit.html", tweet: tweet, changeset: changeset, user: user)
   end
 
-  def update(conn, %{"id" => id, "tweet" => tweet_params}) do
-    tweet = Tweeters.get_tweet!(id)
+  def update(conn, %{"id" => id, "tweet" => tweet_params}, user) do
+    tweet = Tweeters.get_tweet!(user, id)
 
     case Tweeters.update_tweet(tweet, tweet_params) do
       {:ok, tweet} ->
         conn
         |> put_flash(:info, "Tweet updated successfully.")
-        |> redirect(to: user_tweet_path(conn, :show, conn.assings[:user], tweet))
+        |> redirect(to: user_tweet_path(conn, :show, user, tweet))
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "edit.html", tweet: tweet, changeset: changeset)
+        render(conn, "edit.html", tweet: tweet, changeset: changeset, user: user)
     end
   end
 
-  def delete(conn, %{"id" => id}) do
-    tweet = Tweeters.get_tweet!(id)
+  def delete(conn, %{"id" => id}, user) do
+    tweet = Tweeters.get_tweet!(user, id)
     {:ok, _tweet} = Tweeters.delete_tweet(tweet)
 
     conn
     |> put_flash(:info, "Tweet deleted successfully.")
-    |> redirect(to: user_tweet_path(conn, :index, conn.assigns[:user]))
+    |> redirect(to: user_tweet_path(conn, :index, user))
   end
 
-  defp check_tweet_owner(%{params: %{"id" => tweet_id}} = conn, _params) do
-    if Tweeters.get_tweet!(tweet_id).user_id == conn.assigns.user.id do
+  def action(conn, _) do
+    args = [conn, conn.params, conn.assigns.user]
+    apply(__MODULE__, action_name(conn), args)
+  end
+
+  defp check_tweet_owner(%{params: %{"id" => tweet_id}, assigns: %{user: user}} = conn, _params) do
+    if Tweeters.get_tweet!(user, tweet_id).user_id == user.id do
       conn
     else
       conn
       |> put_flash(:error, "No Access.")
-      |> redirect(to: user_tweet_path(conn, :index, conn.assings[:user]))
+      |> redirect(to: user_tweet_path(conn, :index, user))
       |> halt()
     end
   end
