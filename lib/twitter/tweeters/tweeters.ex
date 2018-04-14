@@ -117,8 +117,10 @@ defmodule Twitter.Tweeters do
       [%Tweet{}, ...]
 
   """
-  def list_tweets do
-    Repo.all(Tweet)
+  def list_tweets(user) do
+    Tweet
+     |> where([t], t.user_id == ^user.id)
+     |> Repo.all
   end
 
   @doc """
@@ -135,7 +137,11 @@ defmodule Twitter.Tweeters do
       ** (Ecto.NoResultsError)
 
   """
-  def get_tweet!(id), do: Repo.get!(Tweet, id)
+  def get_tweet!(user, id) do
+    Tweet
+     |> where([t], t.user_id == ^user.id)
+     |> Repo.get!(id) 
+  end
 
   @doc """
   Creates a tweet.
