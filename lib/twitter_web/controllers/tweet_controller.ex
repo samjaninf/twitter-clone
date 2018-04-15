@@ -32,18 +32,18 @@ defmodule TwitterWeb.TweetController do
   end
 
   def show(conn, %{"id" => id}, user) do
-    tweet = Tweeters.get_tweet!(user, id)
+    tweet = Tweeters.get_tweet!(id)
     render(conn, "show.html", tweet: tweet, user: user)
   end
 
   def edit(conn, %{"id" => id}, user) do
-    tweet = Tweeters.get_tweet!(user, id)
+    tweet = Tweeters.get_tweet!(id)
     changeset = Tweeters.change_tweet(tweet)
     render(conn, "edit.html", tweet: tweet, changeset: changeset, user: user)
   end
 
   def update(conn, %{"id" => id, "tweet" => tweet_params}, user) do
-    tweet = Tweeters.get_tweet!(user, id)
+    tweet = Tweeters.get_tweet!(id)
 
     case Tweeters.update_tweet(tweet, tweet_params) do
       {:ok, tweet} ->
@@ -56,7 +56,7 @@ defmodule TwitterWeb.TweetController do
   end
 
   def delete(conn, %{"id" => id}, user) do
-    tweet = Tweeters.get_tweet!(user, id)
+    tweet = Tweeters.get_tweet!(id)
     {:ok, _tweet} = Tweeters.delete_tweet(tweet)
 
     conn
@@ -70,7 +70,7 @@ defmodule TwitterWeb.TweetController do
   end
 
   defp check_tweet_owner(%{params: %{"id" => tweet_id}, assigns: %{user: user}} = conn, _params) do
-    if Tweeters.get_tweet!(user, tweet_id).user_id == user.id do
+    if Tweeters.get_tweet!(tweet_id).user_id == user.id do
       conn
     else
       conn

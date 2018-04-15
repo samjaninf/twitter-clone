@@ -77,9 +77,9 @@ defmodule Twitter.TweetersTest do
       assert length(Tweeters.list_tweets(user)) == 1
     end
 
-    test "get_tweet!/1 returns the tweet with given id", %{user: user, tweet: tweet} do
-      assert Tweeters.get_tweet!(user, tweet.id).body == tweet.body
-      assert Tweeters.get_tweet!(user, tweet.id).id == tweet.id
+    test "get_tweet!/1 returns the tweet with given id", %{tweet: tweet} do
+      assert Tweeters.get_tweet!(tweet.id).body == tweet.body
+      assert Tweeters.get_tweet!(tweet.id).id == tweet.id
     end
 
     test "create_tweet/1 with valid data creates a tweet", %{user: user, valid_tweet_params: valid_tweet_params} do
@@ -98,15 +98,15 @@ defmodule Twitter.TweetersTest do
       assert tweet.body == valid_update_params.body
     end
 
-    test "update_tweet/2 with invalid data returns error changeset", %{tweet: tweet, user: user} do
+    test "update_tweet/2 with invalid data returns error changeset", %{tweet: tweet} do
       invalid_update_params = params_for(:tweet, body: "")
       assert {:error, %Ecto.Changeset{}} = Tweeters.update_tweet(tweet, invalid_update_params)
-      assert tweet.id == Tweeters.get_tweet!(user, tweet.id).id
+      assert tweet.id == Tweeters.get_tweet!(tweet.id).id
     end
 
-    test "delete_tweet/1 deletes the tweet", %{user: user, tweet: tweet} do
+    test "delete_tweet/1 deletes the tweet", %{tweet: tweet} do
       assert {:ok, %Tweet{}} = Tweeters.delete_tweet(tweet)
-      assert_raise Ecto.NoResultsError, fn -> Tweeters.get_tweet!(user, tweet.id) end
+      assert_raise Ecto.NoResultsError, fn -> Tweeters.get_tweet!(tweet.id) end
     end
 
     test "change_tweet/1 returns a tweet changeset", %{tweet: tweet} do
