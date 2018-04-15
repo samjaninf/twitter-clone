@@ -40,8 +40,13 @@ defmodule TwitterWeb.TweetControllerTest do
       assert %{id: id} = redirected_params(conn)
       assert redirected_to(conn) == user_tweet_path(conn, :show, user, id)
 
-      # conn = get conn, user_tweet_path(conn, :show, user, id)
-      # assert html_response(conn, 200) =~ "Show Tweet"
+      conn =
+        conn
+        |> recycle()
+        |> Map.put(:assigns, conn.assigns)
+
+      conn = get(conn, user_tweet_path(conn, :show, user, id))
+      assert html_response(conn, 200) =~ "Show Tweet"
     end
 
     test "renders errors when data is invalid", %{conn: conn, invalid_tweet_params: invalid_tweet_params} do
@@ -65,8 +70,13 @@ defmodule TwitterWeb.TweetControllerTest do
       conn = put conn, user_tweet_path(conn, :update, user, tweet), tweet: valid_tweet_params
       assert redirected_to(conn) == user_tweet_path(conn, :show, user, tweet)
 
-      # conn = get conn, user_tweet_path(conn, :show, user, tweet)
-      # assert html_response(conn, 200) =~ valid_tweet_params.body
+      conn =
+        conn
+        |> recycle()
+        |> Map.put(:assigns, conn.assigns)
+
+      conn = get conn, user_tweet_path(conn, :show, user, tweet)
+      assert html_response(conn, 200) =~ valid_tweet_params.body
     end
 
     test "renders errors when data is invalid", %{conn: conn, user: user, tweet: tweet, invalid_tweet_params: invalid_tweet_params} do
