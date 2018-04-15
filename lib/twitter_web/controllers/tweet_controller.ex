@@ -9,7 +9,7 @@ defmodule TwitterWeb.TweetController do
 
 
   def index(conn, _params, user) do
-    tweets = Tweeters.list_tweets(user)
+    tweets = Tweeters.list_user_tweets(user)
     render(conn, "index.html", tweets: tweets)
   end
 

@@ -117,11 +117,25 @@ defmodule Twitter.Tweeters do
       [%Tweet{}, ...]
 
   """
-  def list_tweets(user) do
-    Tweet
-    |> where([t], t.user_id == ^user.id)
-    |> Repo.all
+  def list_tweets do
+    Repo.all(Tweet)
   end
+
+  @doc """
+  Returns the list of users tweets.
+
+  ## Examples
+
+      iex> list_user_tweets(user)
+      [%Tweet{}, ...]
+
+  """
+
+  def list_user_tweets(user) do
+   Tweet
+   |> where([t], t.user_id == ^user.id)
+   |> Repo.all
+ end
 
   @doc """
   Gets a single tweet.

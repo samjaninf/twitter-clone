@@ -73,8 +73,12 @@ defmodule Twitter.TweetersTest do
   end
 
   describe "tweets" do
-    test "list_tweets/0 returns all tweets", %{user: user} do
-      assert length(Tweeters.list_tweets(user)) == 1
+    test "list_tweets/0 returns all tweets" do
+      assert length(Tweeters.list_tweets()) == 1
+    end
+
+    test "list_user_tweets/1 returns all tweets", %{user: user} do
+      assert length(Tweeters.list_user_tweets(user)) == 1
     end
 
     test "get_tweet!/1 returns the tweet with given id", %{tweet: tweet} do
