@@ -12,10 +12,24 @@
 // If you no longer want to use a dependency, remember
 // to also remove its path from "config.paths.watched".
 import "phoenix_html"
-import React from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
-ReactDOM.render(<div>Hello I am react up in here</div>, document.getElementById('react_test'));
+class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = { }
+  }
+
+  render() {
+    return(
+      <div>Hello I am react up in here</div>
+    );
+  }
+}
+
+ReactDOM.render(<App />, document.querySelector('#react_test'));
 
 
 // Import local files
