@@ -14,6 +14,7 @@
 import "phoenix_html"
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import TweetBox from './components/tweet_box'
 
 class App extends Component {
   constructor(props) {
@@ -24,12 +25,12 @@ class App extends Component {
 
   render() {
     return(
-      <div>Hello I am react up in here</div>
+      <TweetBox />
     );
   }
 }
 
-ReactDOM.render(<App />, document.querySelector('#react_test'));
+ReactDOM.render(<TweetBox />, document.querySelector('#react_test'));
 
 
 // Import local files
